@@ -1,0 +1,12 @@
+a.msb_icon{
+    background: url('favicon.ico') no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 34px;
+    color: transparent !important;
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+
