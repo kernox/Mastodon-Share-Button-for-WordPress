@@ -1,0 +1,68 @@
+html{
+    height:100%;
+}
+body{
+    background: #313543 url(mascotte.png) no-repeat bottom;
+    color: #d9e1e8;
+
+    font-family: "roboto";
+    height:80%;
+    margin: 20px 20px 0 20px;
+    
+}
+
+h1{
+    font-family: "Montserrat"
+}
+
+input, textarea{
+    font-family: "roboto";
+    width:calc(100% - 10px);
+    font-size: 16px;
+    padding:5px;
+}
+
+.button {
+    background-color: #2588d0;
+    border: 10px none;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    height: 36px;
+    letter-spacing: 0;
+    line-height: 36px;
+    overflow: hidden;
+    padding: 0 16px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    -webkit-transition: all .1s ease-in;
+    transition: all .1s ease-in;
+    white-space: nowrap;
+    width: auto;
+}
+
+.button.button-alternative {
+    font-size: 16px;
+    line-height: 36px;
+    height: auto;
+    color: #282c37;
+    background: #9baec8;
+    text-transform: none;
+    padding: 4px 16px;
+}
+
+.button:hover {
+    background: transparent;
+    border: 1px solid #9baec8;
+    padding: 3px 15px;
+    color: #9baec8;
+}
