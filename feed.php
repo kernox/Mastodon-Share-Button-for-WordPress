@@ -2,28 +2,31 @@
 <html>
 <head>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
-	<link rel="stylesheet" href="css/feed.css">
+	<link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ) ?>css/feed.css">
 </head>
 <body>
-	<h1>Share on mastodon</h1>
-	<input type="text" name="instance" id="instance" value="https://framapiaf.org"></p>
+	<h1><?php  _e('Share on mastodon','mastodon-share-button') ?></h1>
 
-	<textarea name="message" id="message" cols="30" rows="10"><?php echo htmlentities($_COOKIE['msb_message']); ?></textarea>
+	<label for="instance">Instance with http(s)</label>
+	<input type="text" name="instance" id="instance" value=""></p>
+
+	<label for="message">Text of your message</label>
+	<textarea name="message" id="message" cols="30" rows="10"><?php echo htmlentities( $_COOKIE['msb_message'] ); ?></textarea>
 	<p><button id="send" class="button button-alternative">Send</button></p>
 
 	<script
 	src="http://code.jquery.com/jquery-3.2.1.min.js"
 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	crossorigin="anonymous"></script>
-	<script src="mastodon.js"></script>
+	<script src="<?php echo plugin_dir_url( __FILE__ ) ?>js/mastodon.js"></script>
 	<script>
 		var btnSend = document.getElementById('send');
 		var instanceUrl = document.getElementById('instance');
+		var message = document.getElementById('message');
 
 		btnSend.addEventListener('click', sendToot);
 
-
-		<?php if(isset($_GET['code'])): ?>
+		<?php if ( isset( $_GET['code'] ) ) : ?>
 			var api = new MastodonAPI({
 				instance: instanceUrl.value,
 				api_user_token: ""
@@ -44,6 +47,17 @@
 
 		function sendToot(){
 
+			instanceUrl.classList.remove('error');
+			message.classList.remove('error');
+
+			if (instanceUrl.value.length == 0){
+				instanceUrl.classList.add('error');
+			}
+
+			if (message.value.length == 0){
+				message.classList.add('error');
+			}
+
 			var access_token = localStorage.getItem('access_token');
 			console.log(access_token);
 
@@ -59,24 +73,28 @@
 					["read", "write", "follow"],
 					"http://github.com/kernox",
 					function(data) {
-						// we got our application
-						// lets save it to our browser storage
 						localStorage.setItem("mastodon_client_id", data["client_id"]);
 						localStorage.setItem("mastodon_client_secret", data["client_secret"]);
 						localStorage.setItem("mastodon_client_redirect_uri", data["redirect_uri"]);
-						// now, that we have saved our application data, generate an oauth url and send
-						// our user to it!
+
 						window.location.href = api.generateAuthLink(data["client_id"],
 							data["redirect_uri"],
-							"code", // oauth method
-							["read", "write", "follow"] //scopes
+							"code",
+							["read", "write", "follow"]
 						);
 					}
 				);
 			}
 			else
 			{
-				api.post('statuses',{status: "test bouton mastodon share"});
+				var result = api.post('statuses',{status: "test bouton mastodon share @hellexis", visibility: "direct"});
+				result.promise().then(function(){
+					console.log('All is fine !');
+				}, function(){
+					localStorage.removeItem('access_token');
+					sendToot();
+				});			
+				
 			}
 		}
 	</script>

@@ -7,8 +7,7 @@ body{
 
     font-family: "roboto";
     height:80%;
-    margin: 20px 20px 0 20px;
-    
+    margin: 20px 20px 0 20px;  
 }
 
 h1{
@@ -20,6 +19,10 @@ input, textarea{
     width:calc(100% - 10px);
     font-size: 16px;
     padding:5px;
+}
+
+input.error, textarea.error{
+    border: 2px solid #df405a;
 }
 
 .button {
